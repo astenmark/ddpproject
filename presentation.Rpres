@@ -1,0 +1,56 @@
+Car MPG Prediction App
+========================================================
+author: Andreas Stenmark
+date: `r date()`
+
+Introduction
+========================================================
+
+Car MPG prediction is an app that predicts miles per gallon
+for cars based on power and weight.
+
+- Enter power in hp
+- Enter weight in lb/1000
+- The app predicts the MPG
+
+Prediction Algorithm
+========================================================
+
+The prediction is based on a linear model fitted on the
+mtcars dataset in R.  Below is an example of the calculation
+when power is 120 hp and weight is 3300 lbs.
+
+```{r}
+carMPG <- function(hp, wt) {
+    R <- lm(mpg ~ 1+hp+wt, data=mtcars)
+    newdata <- data.frame(hp=hp, wt=wt)
+    predict(R, newdata)[[1]]
+}
+
+carMPG(120, 3.3)
+```
+
+Correlation Plots
+========================================================
+
+The plots below show the correlation between mpg and hp, and mpg and weight respectively.
+
+```{r, fig.width=28, fig.height=12, echo=FALSE}
+par(mfrow = c(1, 2))
+plot(mpg ~ hp, data = mtcars, pch = 19, col = "red", cex = 3, cex.lab = 2.5, cex.axis = 2.5, xlab = "Power (hp)", ylab = "Fuel economy (MPG)")
+abline(lm(mpg ~ hp, data = mtcars), lwd = 2)
+plot(mpg ~ wt, data = mtcars, pch = 19, col = "blue", cex = 3, cex.lab = 2.5, cex.axis = 2.5, xlab = "Weight (lb/1000)", ylab = "Fuel economy (MPG)")
+abline(lm(mpg ~ wt, data = mtcars), lwd = 2)
+```
+
+Summary
+========================================================
+
+The app is available at:
+http://astenmark.shinyapps.io/ddpproject/
+
+The code is available at:
+https://github.com/astenmark/ddpproject
+
+This presentation is available at:
+http://rpubs.com/astenmark/carmpg
